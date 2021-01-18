@@ -40,6 +40,7 @@ const Query = ({ repoName, onRequestComplete, isDataLoaded }) => {
 
       onRequestComplete(repoName, userToReviewCountMap);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [res]);
 
   return (

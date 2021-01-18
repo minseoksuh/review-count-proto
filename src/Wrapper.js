@@ -22,11 +22,6 @@ const repoList = [
   "vroong-ceo-web",
 ];
 
-const repoIndexMap = repoList.reduce((prev, curr, index) => {
-  prev[curr] = index;
-  return prev;
-}, {});
-
 // TODO: get member list from api
 const memberList = [
   "mindfull",
