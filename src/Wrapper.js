@@ -1,54 +1,106 @@
-import { useQuery } from "@apollo/react-hooks";
+import { useState, useCallback, useMemo } from "react";
+import { makeStyles } from "@material-ui/core/styles";
 
-import { GET_PR_REVIEWS } from "./queries";
+import Table from "@material-ui/core/Table";
+import TableBody from "@material-ui/core/TableBody";
+import TableCell from "@material-ui/core/TableCell";
+import TableHead from "@material-ui/core/TableHead";
+import TableRow from "@material-ui/core/TableRow";
+
+import Query from "./Query";
+
+const useStyles = makeStyles({
+  table: {
+    width: 1020,
+    margin: "40px auto 40px",
+  },
+});
+const repoList = [
+  "vroong-tms-manager-web",
+  "vroong-design-system-web",
+  "mesh-one-web",
+  "vroong-ceo-web",
+];
+
+const repoIndexMap = repoList.reduce((prev, curr, index) => {
+  prev[curr] = index;
+  return prev;
+}, {});
+
+// TODO: get member list from api
+const memberList = [
+  "mindfull",
+  "magichim",
+  "haeguri",
+  "kizmo04",
+  "Pewww",
+  "jungpaeng",
+  "juunone",
+  "k44ng",
+  "minseoksuh",
+  "yeomhyeseon",
+];
 
 export default function Wrapper() {
-  // const res = useQuery(INTROSPECT);
-  const res2 = useQuery(GET_PR_REVIEWS, {
-    variables: {
-      owner: "meshkorea",
-      name: "vroong-tms-manager-web",
-      number: 10,
+  const classes = useStyles();
+
+  const [repoReviewCounts, setRepoReviewCounts] = useState({});
+
+  const setReviewCountsData = useCallback(
+    (repoName, reviewCountData) => {
+      setRepoReviewCounts({ ...repoReviewCounts, [repoName]: reviewCountData });
     },
-  });
+    [repoReviewCounts]
+  );
 
-  console.log({ res2 });
+  console.log("state", repoReviewCounts);
 
-  let dataMap;
+  const isDataReady = useMemo(() => {
+    return repoList.every((repoName) => !!repoReviewCounts[repoName]);
+  }, [repoReviewCounts]);
 
-  if (res2.data)
-    dataMap = res2.data.search.edges.reduce((prev, curr) => {
-      console.log({ curr });
-
-      const authorSet = new Set();
-
-      curr.node.comments.nodes.forEach((comment) => {
-        authorSet.add(comment.author.login);
-      });
-
-      curr.node.reviews.nodes.forEach((review) => {
-        authorSet.add(review.author.login);
-      });
-
-      authorSet.forEach((username) => {
-        console.log(username, prev[username]);
-        prev[username] = prev[username] === undefined ? 1 : prev[username] + 1;
-      });
-
-      console.log({ prev });
-      return prev;
-    }, {});
-
-  console.log({ dataMap });
+  console.log({ isDataReady });
 
   return (
-    <div>
-      {dataMap &&
-        Object.keys(dataMap).map((key) => (
-          <div>
-            {key}: {dataMap[key]}
-          </div>
+    <div style={{ margin: "auto" }}>
+      <Table className={classes.table} aria-label="simple table">
+        <TableHead>
+          <TableRow>
+            <TableCell>Dev / Repo</TableCell>
+            {repoList.map((repoName) => (
+              <TableCell align="right">{repoName}</TableCell>
+            ))}
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {isDataReady
+            ? memberList.map((member) => (
+                <TableRow key={member}>
+                  <TableCell component="th" scope="row">
+                    {member}
+                  </TableCell>
+                  {repoList.map((repoName) => (
+                    <TableCell align="right">
+                      {repoReviewCounts[repoName][member] ?? 0}
+                    </TableCell>
+                  ))}
+                </TableRow>
+              ))
+            : "데이터 로드 중"}
+        </TableBody>
+      </Table>
+      <hr style={{ margin: "0 20px" }} />
+      <br />
+
+      <ul style={{ marginLeft: "30px" }}>
+        {repoList.map((repoName) => (
+          <Query
+            repoName={repoName}
+            onRequestComplete={setReviewCountsData}
+            isDataLoaded={!!repoReviewCounts[repoName]}
+          />
         ))}
+      </ul>
     </div>
   );
 }

@@ -1,12 +1,8 @@
 import gql from "graphql-tag";
 
 export const GET_PR_REVIEWS = gql`
-  query {
-    search(
-      query: "repo:meshkorea/vroong-tms-manager-web is:pr created:>=2021-01-01"
-      type: ISSUE
-      first: 100
-    ) {
+  query($queryString: String!) {
+    search(query: $queryString, type: ISSUE, first: 100) {
       edges {
         node {
           ... on PullRequest {
