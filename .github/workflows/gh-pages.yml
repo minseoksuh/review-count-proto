@@ -9,10 +9,13 @@ jobs:
   deploy:
     runs-on: ubuntu-18.04
     steps:
-      - run: |
+      - name: build
+        uses: ./
+        run: |
           ls
           yarn
           yarn build
+
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
         with:
