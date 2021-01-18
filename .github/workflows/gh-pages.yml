@@ -11,7 +11,8 @@ jobs:
     steps:
       - name: build
         uses: ./
-        run: |
+
+      - run: |
           ls
           yarn
           yarn build
