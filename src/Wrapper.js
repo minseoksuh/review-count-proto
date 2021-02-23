@@ -71,6 +71,9 @@ export default function Wrapper() {
 
   return (
     <div style={{ margin: "auto" }}>
+      <span style={{ position: "absolute", top: "12px", left: "12px" }}>
+        {new Date().toString()}
+      </span>
       <Table className={classes.table} aria-label="simple table">
         <TableHead>
           <TableRow>
