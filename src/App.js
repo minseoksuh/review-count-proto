@@ -1,8 +1,10 @@
 import { ApolloProvider } from "@apollo/react-hooks";
-import client from "./client";
 import Wrapper from "./Wrapper";
+import { createClient } from "./client";
 
 function App() {
+  const client = createClient();
+
   return (
     <ApolloProvider client={client}>
       <Wrapper />
