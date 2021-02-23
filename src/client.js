@@ -3,17 +3,19 @@ import ApolloClient from "apollo-boost";
 export const createClient = () => {
   const PAK = process.env.REACT_APP_GITHUB_KEY;
 
+  const cleanPAK = PAK.replace("min", "");
+
   return new ApolloClient({
     uri: "https://api.github.com/graphql",
     headers: {
-      Authorization: `bearer ${PAK}`,
+      Authorization: `bearer ${cleanPAK}`,
     },
     service: {
       name: "github",
       url: "https://api.github.com/graphql",
       // optional headers
       headers: {
-        authorization: `bearer ${PAK}`,
+        authorization: `bearer ${cleanPAK}`,
       },
       // optional disable SSL validation check
       skipSSLValidation: true,
