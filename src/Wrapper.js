@@ -16,10 +16,23 @@ const useStyles = makeStyles({
   },
 });
 const repoList = [
+  "mesh-one-web",
+  "mesh-one-api",
+  "mesh-ui",
+  "mesh-control-platform-api",
+  "meshkorea-landing-web",
   "vroong-tms-manager-web",
   "vroong-design-system-web",
-  "mesh-one-web",
+  "vroong-urban-web",
+  "vroong-store-web",
   "vroong-ceo-web",
+  "vroong-orga-web",
+  "vroong-bi-web",
+  "vroong-rider-web",
+  "vroong-direct-web",
+  "vroong-mds-chrome-extension",
+  "cake-form",
+  "automata",
 ];
 
 // TODO: get member list from api
