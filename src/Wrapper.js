@@ -7,7 +7,7 @@ import TableCell from "@material-ui/core/TableCell";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 
-import Query from "./Query";
+import Query, { getFirstDateOfMonth } from "./Query";
 
 const useStyles = makeStyles({
   table: {
@@ -100,6 +100,13 @@ export default function Wrapper() {
       <hr style={{ margin: "0 20px" }} />
       <br />
 
+      <div style={{ marginLeft: "30px", marginBottom: "12px" }}>
+        *{getFirstDateOfMonth()} 이후로 생성된 PR에 대하여 코멘트나 리뷰를
+        해주셨다면 count 1 이 올라갑니다.
+      </div>
+      <div style={{ marginLeft: "30px" }}>
+        *한 PR에 여러번 리뷰를 하더라도 1로 count 됩니다.
+      </div>
       <ul style={{ marginLeft: "30px" }}>
         {repoList.map((repoName) => (
           <Query

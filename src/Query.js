@@ -52,7 +52,7 @@ const Query = ({ repoName, onRequestComplete, isDataLoaded }) => {
 
 export default Query;
 
-function getFirstDateOfMonth() {
+export function getFirstDateOfMonth() {
   var d = new Date(),
     month = "" + (d.getMonth() + 1),
     year = d.getFullYear();
