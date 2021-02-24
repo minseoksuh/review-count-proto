@@ -72,15 +72,18 @@ export default function Wrapper() {
   return (
     <div style={{ margin: "auto" }}>
       <span style={{ position: "absolute", top: "12px", left: "12px" }}>
-        {new Date().toString()}
+        {`${new Date().getFullYear()}년 ${
+          new Date().getMonth() + 1
+        }월 리뷰 현황판`}
       </span>
       <Table className={classes.table} aria-label="simple table">
-        <TableHead>
+        <TableHead style={{ fontWeight: "700" }}>
           <TableRow>
             <TableCell>Dev / Repo</TableCell>
             {repoList.map((repoName) => (
               <TableCell align="right">{repoName}</TableCell>
             ))}
+            <TableCell>Total</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -95,6 +98,12 @@ export default function Wrapper() {
                       {repoReviewCounts[repoName][member] ?? 0}
                     </TableCell>
                   ))}
+                  <TableCell>
+                    {Object.keys(repoReviewCounts).reduce((prev, curr) => {
+                      console.log(prev, curr);
+                      return prev + (repoReviewCounts[curr][member] ?? 0);
+                    }, 0)}
+                  </TableCell>
                 </TableRow>
               ))
             : "데이터 로드 중"}
