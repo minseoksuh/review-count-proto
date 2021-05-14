@@ -38,15 +38,15 @@ const repoList = [
 // TODO: get member list from api
 const memberList = [
   "mindfull",
+  "ClareKang",
+  "yeomhyeseon",
   "magichim",
   "haeguri",
   "kizmo04",
   "Pewww",
-  "jungpaeng",
   "juunone",
   "k44ng",
   "minseoksuh",
-  "yeomhyeseon",
 ];
 
 export default function Wrapper() {
